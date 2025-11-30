@@ -34,7 +34,7 @@ body {
 
 /* 홈 그리드 스타일 */
 #homeGrid {
-    margin-top: 190px;
+    margin-top: 260px; /* 공룡 배경 안 가리게 조정 */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
