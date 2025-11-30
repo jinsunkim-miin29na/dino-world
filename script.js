@@ -10,39 +10,42 @@ const regions = [
   "창원",
 ];
 
-// 지역별 예시 영상 (나중에 유튜브ID만 바꿔 끼우면 됨)
+// 지역별 영상 (용인은 네가 준 링크 사용)
 const regionVideos = {
   용인: [
-    { title: "용인 공룡쇼 1", id: "dQw4w9WgXcQ" },
-    { title: "용인 공룡쇼 2", id: "oHg5SJYRHA0" },
+    {
+      title: "용인 공룡쇼 1",
+      // https://youtu.be/ZgPjkSKD7WA?si=... 에서 ID만 추출
+      id: "ZgPjkSKD7WA",
+    },
   ],
   인천: [
-    { title: "인천 공룡쇼 1", id: "KxJjSxGZ-ew" },
-    { title: "인천 공룡쇼 2", id: "L_jWHffIx5E" },
+    { title: "인천 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "인천 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   동탄: [
-    { title: "동탄 공룡쇼 1", id: "6_b7RDuLwcI" },
-    { title: "동탄 공룡쇼 2", id: "UIBHRFQ8YFY" },
+    { title: "동탄 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "동탄 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   아산: [
-    { title: "아산 공룡쇼 1", id: "4NRXx6U8ABQ" },
-    { title: "아산 공룡쇼 2", id: "dQw4w9WgXcQ" },
+    { title: "아산 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "아산 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   시흥: [
-    { title: "시흥 공룡쇼 1", id: "L_jWHffIx5E" },
-    { title: "시흥 공룡쇼 2", id: "6_b7RDuLwcI" },
+    { title: "시흥 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "시흥 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   세종: [
-    { title: "세종 공룡쇼 1", id: "oHg5SJYRHA0" },
-    { title: "세종 공룡쇼 2", id: "UIBHRFQ8YFY" },
+    { title: "세종 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "세종 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   광주: [
-    { title: "광주 공룡쇼 1", id: "dQw4w9WgXcQ" },
-    { title: "광주 공룡쇼 2", id: "KxJjSxGZ-ew" },
+    { title: "광주 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "광주 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
   창원: [
-    { title: "창원 공룡쇼 1", id: "4NRXx6U8ABQ" },
-    { title: "창원 공룡쇼 2", id: "L_jWHffIx5E" },
+    { title: "창원 공룡쇼 예시 1", id: "ZgPjkSKD7WA" },
+    { title: "창원 공룡쇼 예시 2", id: "ZgPjkSKD7WA" },
   ],
 };
 
@@ -55,6 +58,7 @@ let currentRegion = null;
 let currentVideoId = null;
 
 let player = null;
+let ytReady = false;
 
 // 홈 카드 생성
 function buildHome() {
@@ -90,11 +94,6 @@ function goHome() {
 }
 
 function openSettings() {
-  // 지금은 간단히 설명만 넣어둘게
-  const settingsList = document.getElementById("settingsList");
-  settingsList.innerHTML = `
-    <p>설정 화면은 나중에<br>각 지역 영상 링크를 직접 추가/수정하는 곳으로 만들 수 있어요. 😊</p>
-  `;
   showPage("settingsPage");
 }
 
@@ -106,7 +105,7 @@ function openRegion(name) {
   const videos = regionVideos[name] || [];
   videoList.innerHTML = "";
 
-  videos.forEach((v, idx) => {
+  videos.forEach((v) => {
     const item = document.createElement("div");
     item.className = "video-item";
 
@@ -127,17 +126,28 @@ function openRegion(name) {
 
 // 유튜브 플레이어 준비
 function ensurePlayer(videoId) {
+  if (!ytReady) {
+    // API 아직이면 조금 있다가 다시
+    setTimeout(() => ensurePlayer(videoId), 300);
+    return;
+  }
+
   if (player) {
     player.loadVideoById(videoId);
-  } else if (window.YT && YT.Player) {
-    player = new YT.Player("youtubeFrame", {
-      videoId,
-      playerVars: { rel: 0, playsinline: 1 },
-      events: {},
-    });
   } else {
-    // API가 아직 안 뜨면 조금 있다가 다시 시도
-    setTimeout(() => ensurePlayer(videoId), 400);
+    player = new YT.Player("youtubePlayer", {
+      videoId,
+      playerVars: {
+        rel: 0,
+        playsinline: 1,
+        controls: 1,
+      },
+      events: {
+        onReady: () => {
+          player.playVideo();
+        },
+      },
+    });
   }
 }
 
@@ -145,7 +155,6 @@ function ensurePlayer(videoId) {
 function openPlayer(videoId) {
   currentVideoId = videoId;
   playerRegion.textContent = currentRegion || "";
-
   showPage("playerPage");
   ensurePlayer(videoId);
 }
@@ -180,9 +189,9 @@ function pauseVideo() {
   document.getElementById("playPauseBtn").textContent = "▶ 재생";
 }
 
-// 유튜브 API가 준비되면 호출되는 전역 함수 (꼭 있어야 함)
+// 유튜브 API 준비 콜백 (전역 함수 이름 고정)
 function onYouTubeIframeAPIReady() {
-  // 처음에는 아무것도 하지 않음.
+  ytReady = true;
 }
 
 // 초기 실행
