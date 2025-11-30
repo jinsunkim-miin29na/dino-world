@@ -113,8 +113,20 @@ function playVideo(region, videoId) {
     }
 
     player = new YT.Player("player", {
-        videoId: videoId
-    });
+    videoId: videoId,
+    playerVars: {
+        controls: 0,        // 유튜브 기본 컨트롤 숨김
+        modestbranding: 1,  // 유튜브 로고 최소화
+        rel: 0,             // 관련영상 노출 금지
+        showinfo: 0,        // 제목 표시 금지
+        fs: 0,              // 전체화면 버튼 숨김
+        disablekb: 1,       // 키보드 조작 비활성화
+        iv_load_policy: 3,  // 정보카드 숨김
+        playsinline: 1      // iOS 전체화면 강제 방지
+    },
+    events: {}
+});
+
 }
 
 function replay() {
