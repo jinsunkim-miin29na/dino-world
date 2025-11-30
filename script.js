@@ -1,5 +1,5 @@
 // 지역별 영상 목록
-const videos = {
+let videos = {
     "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
     "인천": ["-_YndV1RjRc"],
     "동탄": ["058QwG7IRe8"],
@@ -10,26 +10,43 @@ const videos = {
     "창원": ["TjNrSYBo5zg"]
 };
 
+// 첫 썸네일 불러오기
+function getThumb(id) {
+    return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+}
 
+// 홈 그리드 생성
+function loadHome() {
+    const home = document.getElementById("homeGrid");
+    home.innerHTML = "";
+
+    Object.keys(videos).forEach(region => {
+        const first = videos[region][0];
+        const thumb = first ? getThumb(first) : "default_dino.png";
+
+        home.innerHTML += `
+            <div class="thumbnail-box" onclick="openRegion('${region}')">
+                <img src="${thumb}">
+                <div class="region-name">${region}</div>
+            </div>
+        `;
+    });
+}
+
+loadHome();
+
+
+// 목록 화면
 function openRegion(region) {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("videoList").classList.remove("hidden");
 
     document.getElementById("regionTitle").innerText = region;
-
-    const container = document.getElementById("videoContainer");
-    container.innerHTML = "";
-
-    if (videos[region].length === 0) {
-        container.innerHTML = "<p>등록된 영상이 없습니다.</p>";
-        return;
-    }
+    const box = document.getElementById("videoContainer");
+    box.innerHTML = "";
 
     videos[region].forEach(id => {
-        const thumb = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
-        container.innerHTML += `
-            <img src="${thumb}" onclick="playVideo('${id}')">
-        `;
+        box.innerHTML += `<img src="${getThumb(id)}" onclick="playVideo('${id}')">`;
     });
 }
 
@@ -40,28 +57,44 @@ function goHome() {
     document.getElementById("home").classList.remove("hidden");
 }
 
+
+// 🎬 YouTube Player
 let player;
 
-function playVideo(videoId) {
+function playVideo(id) {
     document.getElementById("videoList").classList.add("hidden");
     document.getElementById("playerScreen").classList.remove("hidden");
 
     if (player) player.destroy();
 
-    player = new YT.Player('player', {
-        videoId: videoId,
-        events: {}
+    player = new YT.Player("player", {
+        videoId: id
     });
+}
+
+function restartVideo() {
+    if (player) player.seekTo(0);
+}
+
+function togglePlay() {
+    if (!player) return;
+    const state = player.getPlayerState();
+
+    if (state === 1) player.pauseVideo();
+    else player.playVideo();
+}
+
+function pauseVideo() {
+    if (player) player.pauseVideo();
 }
 
 function closePlayer() {
     document.getElementById("playerScreen").classList.add("hidden");
     document.getElementById("videoList").classList.remove("hidden");
-    if (player) player.destroy();
 }
 
 
-/* 설정 화면 열기 */
+// 설정 화면 (추가/삭제/수정)
 function openSettings() {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("settingsScreen").classList.remove("hidden");
@@ -69,30 +102,31 @@ function openSettings() {
     const container = document.getElementById("settingsContainer");
     container.innerHTML = "";
 
-    for (let region in videos) {
-        let html = `
-        <div class="setting-box">
-            <h3>${region}</h3>
+    Object.keys(videos).forEach(region => {
+        let list = videos[region]
+            .map(id => `<input value="https://youtu.be/${id}" data-region="${region}" class="urlInput">`)
+            .join("");
+
+        container.innerHTML += `
+            <div class="setting-group">
+                <h3>${region}</h3>
+                ${list}
+                <button onclick="addUrl('${region}')">+ 영상 추가</button>
+            </div>
         `;
-
-        videos[region].forEach(id => {
-            html += `<div>https://youtu.be/${id}</div>`;
-        });
-
-        html += `
-            <button onclick="addVideo('${region}')">+ 영상 추가</button>
-        </div>`;
-
-        container.innerHTML += html;
-    }
+    });
 }
 
-function addVideo(region) {
-    let url = prompt("YouTube 주소를 입력하세요:");
-    if (!url) return;
+function addUrl(region) {
+    const id = prompt("YouTube URL 입력");
+    if (!id) return;
 
-    let id = url.split("v=")[1] || url.split("/").pop();
-    videos[region].push(id);
-
+    const videoId = extractID(id);
+    videos[region].push(videoId);
     openSettings();
+    loadHome();
+}
+
+function extractID(url) {
+    return url.split("v=")[1] || url.split("/").pop();
 }
