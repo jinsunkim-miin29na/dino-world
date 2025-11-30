@@ -30,9 +30,16 @@
             <div id="player"></div>
 
             <div class="player-controls">
-                <button onclick="replay()" class="pbtn">⟳</button>
-                <button onclick="pauseVideo()" class="pbtn">⏸</button>
                 <button onclick="playVideoAgain()" class="pbtn">▶</button>
+                <button onclick="pauseVideo()" class="pbtn">⏸</button>
+                <button onclick="replay()" class="pbtn">⟳</button>
+            
+                <!-- 타임라인(커스텀 시크바) -->
+                <input type="range" id="seekBar" min="0" max="100" value="0">
+            
+                <!-- 전체화면 / 복귀 -->
+                <button onclick="enterFull()" class="pbtn">⛶</button>
+                <button onclick="exitFull()" class="pbtn">❐</button>
             </div>
         </div>
     </div>
