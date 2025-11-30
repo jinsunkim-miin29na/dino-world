@@ -1,28 +1,13 @@
 // 지역별 영상 목록
 const videos = {
-    "용인": [
-        "ZgPjkSKD7WA",
-        "qRdpwpHaN9k"
-    ],
-    "인천": [
-        "-_YndV1RjRc"
-    ],
-    "동탄": [
-        "058QwG7IRe8"
-    ],
-    "아산": [
-        "3G4s16NXNKQ"
-    ],
-    "시흥": [
-        "058QwG7IRe8"
-    ],
-    "세종": [
-        "MguH4CskJ6M"
-    ],
+    "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
+    "인천": ["-_YndV1RjRc"],
+    "동탄": ["058QwG7IRe8"],
+    "아산": ["3G4s16NXNKQ"],
+    "시흥": ["058QwG7IRe8"],
+    "세종": ["MguH4CskJ6M"],
     "광주": [],
-    "창원": [
-        "TjNrSYBo5zg"
-    ]
+    "창원": ["TjNrSYBo5zg"]
 };
 
 
@@ -56,14 +41,14 @@ function goHome() {
 
 let player;
 
-function playVideo(videoId) {
+function playVideo(id) {
     document.getElementById("videoList").classList.add("hidden");
     document.getElementById("playerScreen").classList.remove("hidden");
 
     if (player) player.destroy();
 
     player = new YT.Player('player', {
-        videoId: videoId,
+        videoId: id,
         events: {}
     });
 }
@@ -74,8 +59,7 @@ function closePlayer() {
     if (player) player.destroy();
 }
 
-
-// YouTube API 로드
-var tag = document.createElement('script');
+// YouTube API
+var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
