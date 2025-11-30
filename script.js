@@ -185,6 +185,9 @@ let tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
 
+// 설정 화면 닫고 홈으로 돌아가기
 function closeSettings() {
-    goHome();
+    hideScreens();
+    document.getElementById("home").classList.remove("hidden");
 }
+
