@@ -1,11 +1,14 @@
+/* 전체 배경: 공룡 이미지 */
 body {
     margin: 0;
     font-family: "Pretendard", sans-serif;
-    background: url("home_bg.png") center/cover no-repeat fixed;
+    background: url("home_bg.png") top/cover no-repeat fixed;
     color: #fff;
+    overflow-x: hidden;
 }
 
 .screen {
+    background: transparent !important;
     width: 100%;
     padding: 20px;
 }
@@ -14,31 +17,34 @@ body {
     display: none;
 }
 
+/* 설정 버튼 */
 #settingsBtn {
     position: absolute;
-    right: 20px;
+    right: 30px;
     top: 20px;
-    padding: 10px 18px;
-    border-radius: 12px;
-    background: rgba(255, 200, 120, 0.9);
-    border: 0;
+    padding: 12px 20px;
+    border-radius: 15px;
+    background: rgba(255,180,80,0.85);
+    border: none;
+    color: #3a2a00;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* 홈 그리드 */
+/* 홈 그리드 스타일 */
 #homeGrid {
-    margin-top: 90px;
+    margin-top: 190px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    padding: 0 20px;
+    gap: 30px;
+    padding: 0 25px;
 }
 
 .thumbnail-box {
-    background: rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    padding: 6px;
+    background: rgba(255, 255, 255, 0.20);
+    border-radius: 22px;
+    padding: 10px;
     text-align: center;
     backdrop-filter: blur(6px);
     cursor: pointer;
@@ -46,98 +52,153 @@ body {
 }
 
 .thumbnail-box:hover {
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
 .thumbnail-box img {
     width: 100%;
     height: 110px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
-.region-name {
-    margin-top: 5px;
+.thumbnail-box .label {
+    margin-top: 6px;
+    font-size: 20px;
     font-weight: bold;
+    color: #fce4b0;
+}
+
+/* 뒤로가기 버튼 */
+.back-btn {
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    background: rgba(255,200,120,0.85);
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* 목록 화면 */
-.back-btn {
-    padding: 8px 14px;
-    border-radius: 10px;
-    background: rgba(255, 200, 120, 0.9);
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-    font-size: 16px;
+#videoList h2 {
+    font-size: 28px;
+    background: rgba(0,0,0,0.4);
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 12px;
 }
 
 .video-grid {
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 18px;
 }
 
 .video-grid img {
     width: 100%;
-    height: 150px;
+    height: 165px;
     object-fit: cover;
     border-radius: 14px;
     cursor: pointer;
 }
 
-/* 🔥 플레이어 프레임 */
+/* 플레이어 화면 */
 .player-frame {
     margin-top: 40px;
-    background: rgba(250, 240, 220, 0.9);
+    background: rgba(255,240,210,0.90);
     border-radius: 30px;
-    padding: 18px;
-    width: 90%;
+    padding: 20px;
+    width: 92%;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 #player {
     width: 100%;
     height: 380px;
-    border-radius: 22px;
+    border-radius: 20px;
     overflow: hidden;
 }
 
+/* 플레이어 버튼 */
 .player-controls {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.player-controls button {
+.pbtn {
     font-size: 28px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    margin: 0 12px;
+    padding: 10px 16px;
+    background: #f7dbb0;
+    color: #5a3e12;
     border: none;
-    background: rgba(50, 30, 10, 0.8);
-    color: #fff;
+    border-radius: 14px;
     cursor: pointer;
 }
 
 /* 설정 화면 */
-#settingsContainer {
-    margin-top: 20px;
+#settingsScreen h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 16px;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 .setting-group {
-    background: rgba(255,255,255,0.2);
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 20px;
+    background: rgba(255,255,255,0.18);
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(8px);
 }
 
-.setting-group input {
-    width: 90%;
+.setting-group h3 {
+    margin: 0 0 10px;
+}
+
+.url-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.url-row input {
+    flex: 1;
     padding: 8px;
     border-radius: 10px;
-    margin-bottom: 5px;
+    border: none;
+}
+
+.remove-btn {
+    background: #ff7777;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-btn {
+    background: #ffd27f;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.save-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #ffc865;
+    border: none;
+    border-radius: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
