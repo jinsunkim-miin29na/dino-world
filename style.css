@@ -97,7 +97,7 @@ body {
 }
 
 .video-grid img {
-    width: 100%;
+    width: 80%;
     aspect-ratio: 4/2.8; /* 가로 4 : 세로 2.8 정도 */
     object-fit: cover;
     border-radius: 14px;
