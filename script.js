@@ -1,9 +1,4 @@
 // ------------------------
-// 🔥 영상 데이터 초기화 금지!
-// ------------------------
-// localStorage.removeItem("videos");   ← 절대 사용 금지!!
-
-// ------------------------
 // 기본 영상 목록
 // ------------------------
 const defaultVideos = {
@@ -18,29 +13,32 @@ const defaultVideos = {
 };
 
 // ------------------------
-// 로컬 저장 불러오기
+// localStorage에서 저장된 값 불러오기 (깨져 있으면 기본값 사용)
 // ------------------------
-let saved;
+let videos;
 
 try {
-    saved = JSON.parse(localStorage.getItem("videos"));
+    const saved = JSON.parse(localStorage.getItem("videos"));
+    if (saved && typeof saved === "object") {
+        videos = saved;
+    } else {
+        videos = JSON.parse(JSON.stringify(defaultVideos)); // 깊은 복사
+    }
 } catch (e) {
-    saved = null;
+    videos = JSON.parse(JSON.stringify(defaultVideos));
 }
 
-let videos = saved && typeof saved === "object"
-    ? saved
-    : structuredClone(defaultVideos);
-
 // ------------------------
-// 홈 화면 로딩
+// 홈 화면 썸네일 표시
 // ------------------------
 function loadHome() {
     const homeGrid = document.getElementById("homeGrid");
+    if (!homeGrid) return;
+
     homeGrid.innerHTML = "";
 
     Object.keys(videos).forEach(region => {
-        const first = videos[region][0];
+        const first = videos[region] && videos[region][0];
         const thumb = first
             ? `https://img.youtube.com/vi/${first}/mqdefault.jpg`
             : "default_dino.png";
@@ -59,12 +57,14 @@ loadHome();
 // 화면 전환 공통
 // ------------------------
 function hideScreens() {
-    document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
+    const screens = document.querySelectorAll(".screen");
+    screens.forEach(s => s.classList.add("hidden"));
 }
 
 function goHome() {
     hideScreens();
-    document.getElementById("home").classList.remove("hidden");
+    const home = document.getElementById("home");
+    if (home) home.classList.remove("hidden");
 }
 
 // ------------------------
@@ -72,11 +72,15 @@ function goHome() {
 // ------------------------
 function openRegion(region) {
     hideScreens();
-    document.getElementById("videoList").classList.remove("hidden");
 
-    document.getElementById("regionTitle").innerText = region;
-
+    const listScreen = document.getElementById("videoList");
+    const titleEl = document.getElementById("regionTitle");
     const container = document.getElementById("videoContainer");
+
+    if (!listScreen || !titleEl || !container) return;
+
+    listScreen.classList.remove("hidden");
+    titleEl.innerText = region;
     container.innerHTML = "";
 
     if (!videos[region] || videos[region].length === 0) {
@@ -99,9 +103,14 @@ let player = null;
 
 function playVideo(region, videoId) {
     hideScreens();
-    document.getElementById("playerScreen").classList.remove("hidden");
 
-    if (player) player.destroy();
+    const playerScreen = document.getElementById("playerScreen");
+    if (!playerScreen) return;
+    playerScreen.classList.remove("hidden");
+
+    if (player) {
+        try { player.destroy(); } catch (e) {}
+    }
 
     player = new YT.Player("player", {
         videoId: videoId
@@ -109,29 +118,38 @@ function playVideo(region, videoId) {
 }
 
 function replay() {
-    if (player) player.seekTo(0);
+    if (player && player.seekTo) player.seekTo(0);
 }
 function pauseVideo() {
-    if (player) player.pauseVideo();
+    if (player && player.pauseVideo) player.pauseVideo();
 }
 function playVideoAgain() {
-    if (player) player.playVideo();
+    if (player && player.playVideo) player.playVideo();
 }
 
 function backToList() {
     hideScreens();
-    document.getElementById("videoList").classList.remove("hidden");
-    if (player) player.destroy();
+
+    const listScreen = document.getElementById("videoList");
+    if (listScreen) listScreen.classList.remove("hidden");
+
+    if (player) {
+        try { player.destroy(); } catch (e) {}
+        player = null;
+    }
 }
 
 // ------------------------
-// 설정 화면
+// 설정 화면 열기 / 닫기
 // ------------------------
 function openSettings() {
     hideScreens();
-    document.getElementById("settingsScreen").classList.remove("hidden");
 
+    const settingsScreen = document.getElementById("settingsScreen");
     const container = document.getElementById("settingsContainer");
+    if (!settingsScreen || !container) return;
+
+    settingsScreen.classList.remove("hidden");
     container.innerHTML = "";
 
     Object.keys(videos).forEach(region => {
@@ -140,11 +158,12 @@ function openSettings() {
 }
 
 function closeSettings() {
+    // 설정 창 닫고 홈으로
     goHome();
 }
 
 // ------------------------
-// 설정화면 UI 생성
+// 설정 화면 UI 생성
 // ------------------------
 function buildRegionSetting(region) {
     let html = `
@@ -153,10 +172,11 @@ function buildRegionSetting(region) {
             <div class="urls" id="urls-${region}">
     `;
 
-    videos[region].forEach((id, idx) => {
+    (videos[region] || []).forEach((id, idx) => {
+        const url = id ? `https://youtu.be/${id}` : "";
         html += `
             <div class="url-row">
-                <input value="https://youtu.be/${id}">
+                <input value="${url}">
                 <button class="remove-btn" onclick="removeUrl('${region}', ${idx})">X</button>
             </div>
         `;
@@ -175,13 +195,17 @@ function buildRegionSetting(region) {
 // 설정 - 추가 / 삭제
 // ------------------------
 function addUrl(region) {
+    if (!videos[region]) videos[region] = [];
     videos[region].push("");
-    openSettings();
+
+    openSettings(); // 다시 렌더링
 }
 
 function removeUrl(region, idx) {
+    if (!videos[region]) return;
     videos[region].splice(idx, 1);
-    openSettings();
+
+    openSettings(); // 다시 렌더링
 }
 
 // ------------------------
@@ -193,40 +217,53 @@ function saveSettings() {
         const newList = [];
 
         inputs.forEach(input => {
-            let url = input.value.trim();
-            let id = extractId(url);
+            const url = input.value.trim();
+            const id = extractId(url);
             if (id) newList.push(id);
         });
 
         videos[region] = newList;
     });
 
-    localStorage.setItem("videos", JSON.stringify(videos));
-    alert("저장 완료!");
+    try {
+        localStorage.setItem("videos", JSON.stringify(videos));
+    } catch (e) {
+        // 저장 실패해도 앱은 동작하게 놔둠
+    }
 
+    alert("저장 완료!");
     loadHome();
     goHome();
 }
 
 // ------------------------
-// 유튜브 URL → ID 정제
+// 유튜브 URL → ID 추출
 // ------------------------
 function extractId(url) {
     if (!url) return null;
 
-    let id = url;
+    let id = url.trim();
 
-    if (url.includes("youtu.be/")) {
-        id = url.split("youtu.be/")[1];
-    } else if (url.includes("v=")) {
-        id = url.split("v=")[1];
+    // 1) youtu.be/ 형식
+    const shortIdx = id.indexOf("youtu.be/");
+    if (shortIdx !== -1) {
+        id = id.substring(shortIdx + "youtu.be/".length);
+    } else {
+        // 2) v= 파라미터 형식
+        const vIdx = id.indexOf("v=");
+        if (vIdx !== -1) {
+            id = id.substring(vIdx + 2);
+        }
     }
 
-    // 뒤에 붙은 ?si=, &t= 같은 파라미터 제거
-    id = id.split("?")[0].split("&")[0];
+    // 3) ?si=, &t= 같은 꼬리 제거
+    const qIdx = id.indexOf("?");
+    if (qIdx !== -1) id = id.substring(0, qIdx);
+    const ampIdx = id.indexOf("&");
+    if (ampIdx !== -1) id = id.substring(0, ampIdx);
 
-    // 이상한 문자 제거
-    id = id.replace(/[^0-9A-Za-z_-]/g, "");
+    // 4) 이상한 문자 제거
+    id = id.replace(/[^0-9A-Za-z_\-]/g, "");
 
     return id || null;
 }
