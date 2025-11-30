@@ -1,4 +1,4 @@
-// 지역별 영상 데이터 (설정에서 수정 가능)
+// 지역별 영상 목록 (초기값)
 let videos = {
     "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
     "인천": ["-_YndV1RjRc"],
@@ -10,8 +10,16 @@ let videos = {
     "창원": ["TjNrSYBo5zg"]
 };
 
-/* ---------------- 홈 → 지역 선택 ---------------- */
+// 저장된 설정 불러오기
+if (localStorage.getItem("dinoVideos")) {
+    videos = JSON.parse(localStorage.getItem("dinoVideos"));
+}
 
+function saveVideos() {
+    localStorage.setItem("dinoVideos", JSON.stringify(videos));
+}
+
+// 홈 → 지역 목록
 function openRegion(region) {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("videoList").classList.remove("hidden");
@@ -22,14 +30,14 @@ function openRegion(region) {
     container.innerHTML = "";
 
     if (videos[region].length === 0) {
-        container.innerHTML = "<p style='color:white;text-align:center;'>등록된 영상이 없습니다.</p>";
+        container.innerHTML = "<p style='color:white;'>등록된 영상이 없습니다.</p>";
         return;
     }
 
     videos[region].forEach(id => {
         const thumb = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
         container.innerHTML += `
-            <img src="${thumb}" onclick="playVideo('${id}')">
+            <img class="videoThumb" src="${thumb}" onclick="playVideo('${id}')">
         `;
     });
 }
@@ -40,8 +48,7 @@ function goHome() {
     document.getElementById("home").classList.remove("hidden");
 }
 
-/* ---------------- 영상 재생 ---------------- */
-
+// 재생
 let player;
 
 function playVideo(videoId) {
@@ -51,7 +58,8 @@ function playVideo(videoId) {
     if (player) player.destroy();
 
     player = new YT.Player('player', {
-        videoId: videoId
+        videoId: videoId,
+        events: {}
     });
 }
 
@@ -61,77 +69,60 @@ function closePlayer() {
     if (player) player.destroy();
 }
 
-/* ---------------- 설정 화면 ---------------- */
-
+// 설정 화면
 function openSettings() {
     document.getElementById("home").classList.add("hidden");
-    document.getElementById("settingsScreen").classList.remove("hidden");
-    renderSettings();
-}
+    document.getElementById("settings").classList.remove("hidden");
 
-function closeSettings() {
-    document.getElementById("settingsScreen").classList.add("hidden");
-    document.getElementById("home").classList.remove("hidden");
-}
-
-function renderSettings() {
     const container = document.getElementById("settingsContainer");
     container.innerHTML = "";
 
     Object.keys(videos).forEach(region => {
-        let html = `
-            <div class="settings-box">
+        let card = `
+            <div class="setting-card">
                 <h3>${region}</h3>
         `;
 
         videos[region].forEach((id, index) => {
-            html += `
-                <input type="text" id="${region}_${index}" value="https://youtu.be/${id}">
+            card += `
+                <div>
+                    <input type="text" value="https://youtu.be/${id}" 
+                           onchange="updateVideo('${region}', ${index}, this.value)">
+                </div>
             `;
         });
 
-        html += `
+        card += `
             <button class="add-btn" onclick="addVideo('${region}')">+ 영상 추가</button>
             </div>
         `;
 
-        container.innerHTML += html;
+        container.innerHTML += card;
     });
+}
+
+function updateVideo(region, index, url) {
+    const id = extractId(url);
+    videos[region][index] = id;
+    saveVideos();
 }
 
 function addVideo(region) {
     videos[region].push("");
-    renderSettings();
+    saveVideos();
+    openSettings();
 }
 
-function saveSettings() {
-    Object.keys(videos).forEach(region => {
-        const newList = [];
-        let index = 0;
-
-        while (document.getElementById(`${region}_${index}`)) {
-            const url = document.getElementById(`${region}_${index}`).value.trim();
-            if (url.includes("youtu")) {
-                const id = extractVideoId(url);
-                if (id) newList.push(id);
-            }
-            index++;
-        }
-        videos[region] = newList;
-    });
-
-    alert("저장되었습니다!");
+function extractId(url) {
+    return url.replace("https://youtu.be/", "").split("?")[0].trim();
 }
 
-/* URL에서 영상 ID 추출 */
-function extractVideoId(url) {
-    let id = url.split("youtu.be/")[1];
-    if (!id) id = url.split("v=")[1];
-    if (id && id.includes("&")) id = id.split("&")[0];
-    return id;
+function closeSettings() {
+    document.getElementById("settings").classList.add("hidden");
+    document.getElementById("home").classList.remove("hidden");
 }
 
-/* YouTube API */
-var tag = document.createElement("script");
+// YouTube API 로드
+var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
