@@ -1,129 +1,95 @@
-body {
+/* 🔥 기본 화면 검은색 제거 */
+html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Pretendard', sans-serif;
-    background: #000;
+    background: transparent !important;
     overflow-x: hidden;
 }
 
+/* 🔥 전체 화면 */
 .screen {
     width: 100%;
     min-height: 100vh;
     position: relative;
 }
 
-.hidden {
-    display: none;
-}
-
-/* 홈 화면 배경 */
+/* 🔥 홈 배경 이미지 */
 #home {
     background: url("home_bg.png") no-repeat center top;
     background-size: cover;
-    padding-top: 160px;
+    padding-top: 240px; /* 썸네일 내려줌 */
 }
 
-#homeTitle {
-    text-align: center;
-    font-size: 60px;
-    font-weight: 900;
-    color: #ffda77;
-    text-shadow: 0 4px 8px #000;
-    margin-bottom: 20px;
-}
-
+/* 설정 버튼 */
 #settingsBtn {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    background: rgba(255,255,255,0.2);
-    padding: 12px 20px;
-    font-size: 20px;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 224, 150, 0.8);
+    border: 2px solid #b37a33;
     border-radius: 20px;
-    border: none;
-    color: #fff;
-    backdrop-filter: blur(5px);
-    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 16px;
 }
 
-/* 홈 그리드 */
-.region-grid {
+/* 🔥 지역 섬네일 4×2 그리드 */
+.grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    width: 90%;
+    gap: 22px;
+    width: 92%;
     margin: 0 auto;
 }
 
-.region-item {
-    background: rgba(255,255,255,0.15);
+.region {
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 18px;
-    padding: 10px;
-    backdrop-filter: blur(5px);
+    padding: 6px;
     text-align: center;
+    backdrop-filter: blur(3px);
 }
 
-.region-item img {
+.region img {
     width: 100%;
-    height: 90px;
+    height: 110px;
     object-fit: cover;
     border-radius: 12px;
 }
 
-.region-item span {
+.region span {
     display: block;
-    margin-top: 6px;
-    font-size: 18px;
-    color: #ffedc6;
-    font-weight: 700;
+    margin-top: 4px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 0px 4px #000;
+}
+
+/* 영상 목록 */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+}
+
+.video-grid img {
+    width: 100%;
+    border-radius: 12px;
 }
 
 /* 뒤로가기 버튼 */
-.back-btn {
-    margin: 20px;
-    padding: 12px 20px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(5px);
-    border: none;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* 설정 페이지 */
-#settingsContainer {
-    padding: 20px;
-}
-
-.setting-card {
-    background: rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 25px;
-    backdrop-filter: blur(5px);
-}
-
-.setting-card h3 {
-    font-size: 26px;
-    margin: 0 0 15px 0;
-    color: #fff;
-}
-
-.setting-card input {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 16px;
     border-radius: 12px;
-    border: none;
-    margin-bottom: 10px;
+    background: #fff3ce;
+    border: 2px solid #ae823a;
+    font-size: 16px;
 }
 
-.add-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    background: #ffd27f;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+/* 숨김 */
+.hidden {
+    display: none;
 }
