@@ -1,0 +1,539 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui,
+    sans-serif;
+  background: radial-gradient(circle at top, #c4f1ff 0, #b2f0c4 45%, #7fd98a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+/* 메인 앱 래퍼 */
+.app {
+  width: 100%;
+  max-width: 1024px;
+  margin: 8px;
+  background: rgba(255, 252, 240, 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* -----------------------------
+      HEADER
+------------------------------ */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #ffcf5d, #ffb34f);
+  color: #5b361b;
+}
+
+.app-logo {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 3px 0 #e39a3c;
+}
+
+.icon-btn {
+  border: none;
+  background: rgba(255, 247, 217, 0.7);
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 0 0 3px rgba(255, 242, 199, 0.8);
+}
+
+.icon-btn.hidden {
+  visibility: hidden;
+}
+
+.icon-img {
+  width: 26px;
+  height: 26px;
+}
+
+/* -----------------------------
+      LAYOUT / PAGES
+------------------------------ */
+
+.app-main {
+  padding: 18px 20px 20px;
+  flex: 1;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #f3fbe8, #fff6de);
+}
+
+.page {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.section-title {
+  margin: 4px 0 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #5f3a1d;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 15px;
+  color: #7b5b33;
+}
+
+.subtitle.small {
+  font-size: 14px;
+}
+
+/* -----------------------------
+      HOME PAGE
+------------------------------ */
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.home-left {
+  padding-right: 8px;
+}
+
+.home-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-dino-hero {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+
+.home-title {
+  font-size: 34px;
+  font-weight: 900;
+  color: #5b361b;
+  margin: 4px 0 4px;
+}
+
+.home-subtitle {
+  font-size: 16px;
+  color: #7b5b33;
+  margin: 0 0 14px;
+}
+
+/* 홈 지역 그리드 */
+
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.region-card {
+  border: none;
+  border-radius: 22px;
+  padding: 6px;
+  cursor: pointer;
+  background: #f8f0d8;
+  box-shadow: 0 6px 12px rgba(183, 141, 71, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.region-card:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 3px 8px rgba(183, 141, 71, 0.45);
+}
+
+.region-thumb-wrapper {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ccc;
+}
+
+.region-thumb {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+
+.region-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.region-play-bubble {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(255, 248, 230, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #5f3a1d;
+}
+
+.region-name {
+  padding: 6px 6px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  color: #5f3a1d;
+}
+
+/* -----------------------------
+      REGION PAGE
+------------------------------ */
+
+.text-back-btn {
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: #5f3a1d;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.video-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.video-card {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 18px;
+  background: #f9f2e2;
+  box-shadow: 0 4px 10px rgba(157, 125, 67, 0.25);
+  cursor: pointer;
+  align-items: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.video-card:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(157, 125, 67, 0.4);
+}
+
+.video-thumb {
+  width: 120px;
+  height: 80px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #ddd;
+}
+
+.video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-info {
+  flex: 1;
+}
+
+.video-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #5f3a1d;
+  margin-bottom: 4px;
+}
+
+.video-subtitle {
+  font-size: 13px;
+  color: #7b5b33;
+}
+
+/* -----------------------------
+      SETTINGS PAGE
+------------------------------ */
+
+#settingsPage {
+  background: linear-gradient(180deg, #f3d9b3, #f4e3c4);
+  border-radius: 24px;
+  padding: 16px 14px 20px;
+}
+
+#settingsContainer {
+  margin-top: 6px;
+}
+
+.settings-region-card {
+  background: #f9f2e2;
+  border-radius: 24px;
+  padding: 18px 18px 16px;
+  margin-bottom: 16px;
+}
+
+.settings-region-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #5a3b1e;
+  margin-bottom: 10px;
+}
+
+.settings-video-url {
+  font-size: 14px;
+  color: #6b4b2a;
+  margin: 4px 0;
+  word-break: break-all;
+}
+
+.add-video-btn {
+  margin-top: 12px;
+  background: #f3d9b3;
+  color: #5a3b1e;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+/* -----------------------------
+         PLAYER OVERLAY
+------------------------------ */
+
+.player-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  z-index: 999;
+}
+
+.player-card {
+  width: 100%;
+  max-width: 820px;
+  background: #fff0d2;
+  border-radius: 26px;
+  padding: 12px 18px 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 상단 바 */
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.player-back-btn {
+  border: none;
+  background: none;
+  font-size: 22px;
+  color: #5f3a1d;
+  cursor: pointer;
+}
+
+.player-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #5f3a1d;
+}
+
+/* 비디오 영역 */
+
+.player-video-wrapper {
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* 16:9 비율 */
+#playerContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+
+#playerContainer #player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 컨트롤 */
+
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.time-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #5f3a1d;
+}
+
+#seekBar {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  background: #f1d9b4;
+  outline: none;
+}
+
+/* Slider thumb */
+#seekBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #7b4a25;
+  box-shadow: 0 0 0 3px #f9e2bd;
+  cursor: pointer;
+}
+
+#seekBar::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #7b4a25;
+  box-shadow: 0 0 0 3px #f9e2bd;
+  cursor: pointer;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.circle-btn {
+  min-width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  background: #f8e3be;
+  box-shadow: 0 5px 10px rgba(146, 103, 53, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #5f3a1d;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.circle-btn:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 2px 6px rgba(146, 103, 53, 0.45);
+}
+
+.player-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* -----------------------------
+        ANIMATIONS
+------------------------------ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------
+        RESPONSIVE
+------------------------------ */
+
+@media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-right {
+    order: -1;
+  }
+
+  .home-dino-hero {
+    max-width: 260px;
+  }
+
+  .region-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ▣ 화면 가로모드 강제 느낌 (세로로 들면 회전) */
+@media screen and (orientation: portrait) {
+  body {
+    transform: rotate(90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
