@@ -1,41 +1,79 @@
-<div class="grid">
-  <div class="menu-card" onclick="openRegion('용인')">
-    <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg" class="thumb" />
-    <span>용인</span>
-  </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공룡월드</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-  <div class="menu-card" onclick="openRegion('인천')">
-    <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg" class="thumb" />
-    <span>인천</span>
-  </div>
+<div id="home" class="screen">
+    <img src="home_bg.png" class="bg" />
 
-  <div class="menu-card" onclick="openRegion('동탄')">
-    <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-    <span>동탄</span>
-  </div>
+    <header>
+        <h1 class="title">공룡월드</h1>
+        <button class="setting-btn" onclick="openSettings()">설정</button>
+    </header>
 
-  <div class="menu-card" onclick="openRegion('아산')">
-    <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg" class="thumb" />
-    <span>아산</span>
-  </div>
+    <div class="grid">
+        <div class="menu-card" onclick="openRegion('용인')">
+            <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg" class="thumb" />
+            <span>용인</span>
+        </div>
 
-  <div class="menu-card" onclick="openRegion('시흥')">
-    <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-    <span>시흥</span>
-  </div>
+        <div class="menu-card" onclick="openRegion('인천')">
+            <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg" class="thumb" />
+            <span>인천</span>
+        </div>
 
-  <div class="menu-card" onclick="openRegion('세종')">
-    <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg" class="thumb" />
-    <span>세종</span>
-  </div>
+        <div class="menu-card" onclick="openRegion('동탄')">
+            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
+            <span>동탄</span>
+        </div>
 
-  <div class="menu-card" onclick="openRegion('광주')">
-    <img src="no_image.png" class="thumb" />
-    <span>광주</span>
-  </div>
+        <div class="menu-card" onclick="openRegion('아산')">
+            <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg" class="thumb" />
+            <span>아산</span>
+        </div>
 
-  <div class="menu-card" onclick="openRegion('창원')">
-    <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg" class="thumb" />
-    <span>창원</span>
-  </div>
+        <div class="menu-card" onclick="openRegion('시흥')">
+            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
+            <span>시흥</span>
+        </div>
+
+        <div class="menu-card" onclick="openRegion('세종')">
+            <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg" class="thumb" />
+            <span>세종</span>
+        </div>
+
+        <div class="menu-card" onclick="openRegion('광주')">
+            <img src="no_image.png" class="thumb" />
+            <span>광주</span>
+        </div>
+
+        <div class="menu-card" onclick="openRegion('창원')">
+            <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg" class="thumb" />
+            <span>창원</span>
+        </div>
+    </div>
 </div>
+
+
+<!-- 지역 선택 시 표시되는 영상 리스트 화면 -->
+<div id="videoList" class="screen hidden">
+    <button class="back-btn" onclick="goHome()">← 뒤로</button>
+    <h2 id="regionTitle"></h2>
+
+    <div id="videoContainer"></div>
+</div>
+
+<!-- 실제 영상 재생 화면 -->
+<div id="playerScreen" class="screen hidden">
+    <button class="back-btn" onclick="closePlayer()">← 뒤로</button>
+    <div id="player"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
