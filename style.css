@@ -1,214 +1,129 @@
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Pretendard', sans-serif;
     background: #000;
     overflow-x: hidden;
 }
 
-/* 화면 공통 */
 .screen {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     position: relative;
-    background: url('home_bg.png') center/cover no-repeat;
 }
 
 .hidden {
     display: none;
 }
 
-/* 설정 버튼 */
-.setting-btn {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    background: rgba(255, 240, 200, 0.7);
-    padding: 10px 18px;
-    border-radius: 18px;
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* 홈 전체 아래로 내리기 */
-.home-content {
-    margin-top: 160px;
-}
-
-/* 지역 그리드 */
-.region-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 18px;
-    width: 90%;
-    margin: 0 auto;
-}
-
-.region-item {
-    text-align: center;
-    background: rgba(255,255,255,0.12);
-    padding: 10px;
-    border-radius: 14px;
-    backdrop-filter: blur(4px);
-    cursor: pointer;
-}
-
-.region-item img {
-    width: 100%;
-    height: 95px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.region-item span {
-    display: block;
-    margin-top: 8px;
-    color: #ffd28c;
-    font-size: 17px;
-    font-weight: bold;
-}
-
-/* 뒤로 버튼 */
-.back-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255,255,255,0.6);
-    padding: 10px 18px;
-    border: none;
-    border-radius: 14px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* 영상 리스트 */
-#videoList h2 {
-    color: #ffd28c;
-    text-align: center;
-    margin-top: 80px;
-}
-
-.thumb-container {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.thumb-container img {
-    width: 100%;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* 플레이어 */
-.player-box {
-    width: 80%;
-    height: 55%;
-    margin: 120px auto 0;
-}
-
-/* 설정 화면 */
-.settings-bg {
-    background: linear-gradient(#ffe7c3, #f9d79a);
-}
-
-.settings-title {
-    text-align: center;
-    margin-top: 80px;
-    color: #6e3d00;
-    font-size: 28px;
-}
-
-#settingsContainer {
-    width: 90%;
-    margin: 30px auto;
-}
-
-.settings-box {
-    background: #fff4dd;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-radius: 18px;
-}
-
-.settings-box h3 {
-    color: #6e3d00;
-}
-
-.settings-box input {
-    width: 90%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #d9b07a;
-    margin-top: 8px;
-}
-
-.add-btn {
-    margin-top: 10px;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 12px;
-    background: #ffd9a8;
-    cursor: pointer;
-}
-
-.save-btn {
-    display: block;
-    margin: 20px auto;
-    background: #ffcc87;
-    padding: 12px 24px;
-    border-radius: 16px;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-}
-/* 홈 화면 전체 여백 확보 — 썸네일이 위로 붙는 문제 해결 */
+/* 홈 화면 배경 */
 #home {
-    padding-top: 180px !important;   /* 필요하면 200~250px로 조정 */
+    background: url("home_bg.png") no-repeat center top;
+    background-size: cover;
+    padding-top: 160px;
 }
 
-/* 그리드가 제목 위로 올라오는 현상 방지 */
-.home-content {
-    margin-top: 120px !important;
+#homeTitle {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 900;
+    color: #ffda77;
+    text-shadow: 0 4px 8px #000;
+    margin-bottom: 20px;
 }
 
-/* 썸네일 크기 및 간격 재조정 */
+#settingsBtn {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    background: rgba(255,255,255,0.2);
+    padding: 12px 20px;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    color: #fff;
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+}
+
+/* 홈 그리드 */
 .region-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 25px;
     width: 90%;
     margin: 0 auto;
 }
 
-/* 썸네일 박스 */
 .region-item {
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(255,255,255,0.15);
     border-radius: 18px;
     padding: 10px;
     backdrop-filter: blur(5px);
     text-align: center;
 }
 
-/* 썸네일 이미지 */
 .region-item img {
     width: 100%;
-    height: 90px;  /* 더 줄여서 배경이 위로 보임 */
+    height: 90px;
     object-fit: cover;
     border-radius: 12px;
 }
 
-/* 지역 텍스트 */
 .region-item span {
     display: block;
     margin-top: 6px;
-    font-size: 17px;
-    font-weight: bold;
-    color: #f8e3b0;
+    font-size: 18px;
+    color: #ffedc6;
+    font-weight: 700;
 }
 
+/* 뒤로가기 버튼 */
+.back-btn {
+    margin: 20px;
+    padding: 12px 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* 설정 페이지 */
+#settingsContainer {
+    padding: 20px;
+}
+
+.setting-card {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(5px);
+}
+
+.setting-card h3 {
+    font-size: 26px;
+    margin: 0 0 15px 0;
+    color: #fff;
+}
+
+.setting-card input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background: #ffd27f;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
