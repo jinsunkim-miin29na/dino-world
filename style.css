@@ -1,95 +1,169 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>공룡월드</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
+body {
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    background: #000;
+    overflow-x: hidden;
+}
 
-<body>
+/* 화면 공통 */
+.screen {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: url('home_bg.png') center/cover no-repeat;
+}
 
-<!-- ⭐ 홈 화면 -->
-<div id="home" class="screen">
-    <img src="home_bg.png" class="bg" />
+.hidden {
+    display: none;
+}
 
-    <header>
-        <h1 class="title">공룡월드</h1>
-        <button class="setting-btn" onclick="openSettings()">설정</button>
-    </header>
+/* 설정 버튼 */
+.setting-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: rgba(255, 240, 200, 0.7);
+    padding: 10px 18px;
+    border-radius: 18px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    <div class="grid">
+/* 홈 전체 아래로 내리기 */
+.home-content {
+    margin-top: 160px;
+}
 
-        <div class="menu-card" onclick="openRegion('용인')">
-            <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg" class="thumb" />
-            <span>용인</span>
-        </div>
+/* 지역 그리드 */
+.region-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 18px;
+    width: 90%;
+    margin: 0 auto;
+}
 
-        <div class="menu-card" onclick="openRegion('인천')">
-            <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg" class="thumb" />
-            <span>인천</span>
-        </div>
+.region-item {
+    text-align: center;
+    background: rgba(255,255,255,0.12);
+    padding: 10px;
+    border-radius: 14px;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
 
-        <div class="menu-card" onclick="openRegion('동탄')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-            <span>동탄</span>
-        </div>
+.region-item img {
+    width: 100%;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 12px;
+}
 
-        <div class="menu-card" onclick="openRegion('아산')">
-            <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg" class="thumb" />
-            <span>아산</span>
-        </div>
+.region-item span {
+    display: block;
+    margin-top: 8px;
+    color: #ffd28c;
+    font-size: 17px;
+    font-weight: bold;
+}
 
-        <div class="menu-card" onclick="openRegion('시흥')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-            <span>시흥</span>
-        </div>
+/* 뒤로 버튼 */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.6);
+    padding: 10px 18px;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    cursor: pointer;
+}
 
-        <div class="menu-card" onclick="openRegion('세종')">
-            <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg" class="thumb" />
-            <span>세종</span>
-        </div>
+/* 영상 리스트 */
+#videoList h2 {
+    color: #ffd28c;
+    text-align: center;
+    margin-top: 80px;
+}
 
-        <div class="menu-card" onclick="openRegion('광주')">
-            <img src="default_dino.png" class="thumb" />
-            <span>광주</span>
-        </div>
+.thumb-container {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        <div class="menu-card" onclick="openRegion('창원')">
-            <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg" class="thumb" />
-            <span>창원</span>
-        </div>
+.thumb-container img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-    </div>
-</div>
+/* 플레이어 */
+.player-box {
+    width: 80%;
+    height: 55%;
+    margin: 120px auto 0;
+}
 
+/* 설정 화면 */
+.settings-bg {
+    background: linear-gradient(#ffe7c3, #f9d79a);
+}
 
-<!-- ⭐ 영상 목록 화면 -->
-<div id="videoList" class="screen hidden">
-    <button class="back-btn" onclick="goHome()">← 뒤로</button>
-    <h2 id="regionTitle"></h2>
-    <div id="videoContainer"></div>
-</div>
+.settings-title {
+    text-align: center;
+    margin-top: 80px;
+    color: #6e3d00;
+    font-size: 28px;
+}
 
+#settingsContainer {
+    width: 90%;
+    margin: 30px auto;
+}
 
-<!-- ⭐ 영상 플레이어 화면 -->
-<div id="playerScreen" class="screen hidden">
-    <button class="back-btn" onclick="closePlayer()">← 뒤로</button>
-    <div id="player"></div>
-</div>
+.settings-box {
+    background: #fff4dd;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 18px;
+}
 
+.settings-box h3 {
+    color: #6e3d00;
+}
 
-<!-- ⭐ 설정 화면 -->
-<div id="settingsScreen" class="screen hidden settings-bg">
-    <button class="back-btn" onclick="closeSettings()">← 뒤로</button>
-    <h2 class="settings-title">지역별 영상 관리</h2>
+.settings-box input {
+    width: 90%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d9b07a;
+    margin-top: 8px;
+}
 
-    <div id="settingsContainer"></div>
-    
-    <button class="save-btn" onclick="saveSettings()">변경 내용 저장</button>
-</div>
+.add-btn {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #ffd9a8;
+    cursor: pointer;
+}
 
-
-<script src="script.js"></script>
-</body>
-</html>
+.save-btn {
+    display: block;
+    margin: 20px auto;
+    background: #ffcc87;
+    padding: 12px 24px;
+    border-radius: 16px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
