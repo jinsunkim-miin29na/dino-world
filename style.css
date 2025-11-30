@@ -1,353 +1,238 @@
-/* 공통 기본 */
-
+/* 기본 리셋 */
 * {
-  box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
   width: 100%;
   height: 100%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR",
-    sans-serif;
-  background: #050608;
-  color: #f4f4f4;
-}
-
-body {
   overflow: hidden;
+  font-family: "Pretendard", sans-serif;
+  background-color: #000; /* fallback */
 }
 
+/* 🦖 홈화면 배경 */
+body {
+  background-image: url("home_bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 공통 숨김 */
 .screen {
   display: none;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 }
 
-.screen.active {
+/* 현재 화면만 보이기 */
+.active {
   display: block;
 }
 
-/* 상단 바 */
-
-.top-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  background: linear-gradient(90deg, #2a1d14, #3b2718);
-  border-bottom: 2px solid #674126;
+/* 상단 제목 */
+.title {
+  font-size: 70px;
+  font-weight: 900;
+  color: rgba(255, 225, 150, 0.95);
+  text-shadow: 5px 5px 0 #5a3b19;
+  text-align: center;
+  margin-top: 10px;
 }
 
-.top-title {
-  font-size: 22px;
+/* 설정 버튼 */
+.setting-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  padding: 15px 25px;
+  background: rgba(255, 222, 180, 0.8);
+  border-radius: 40px;
+  font-size: 28px;
+  font-weight: 700;
+  border: 3px solid #7a5227;
+  cursor: pointer;
+}
+
+/* ---------------------------- */
+/* 🟨 홈화면 8개 카드 (B 스타일) */
+/* ---------------------------- */
+
+.home-grid {
+  width: 100%;
+  position: absolute;
+  bottom: 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 35px;
+  padding: 0 80px;
+}
+
+.home-card {
+  width: 100%;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  position: relative;
+  cursor: pointer;
+  backdrop-filter: blur(3px);
+}
+
+/* 썸네일 이미지 */
+.home-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 카드 하단 오버레이 */
+.home-card .thumb-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---------------------------- */
+/* 🟦 지역 영상 리스트 화면 */
+/* ---------------------------- */
+
+.region-title {
+  font-size: 55px;
   font-weight: 800;
-  color: #f7d9a1;
-  margin: 0;
+  color: #ffe8b7;
+  text-shadow: 5px 5px 0 #5a3b19;
+  text-align: left;
+  margin-bottom: 20px;
 }
+
+.video-list {
+  width: 100%;
+  height: calc(100% - 120px);
+  overflow-y: auto;
+  padding-right: 30px;
+}
+
+/* 지역 썸네일 카드 (큰 썸네일 B스타일) */
+.video-item {
+  width: 100%;
+  height: 320px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 20px;
+  margin-bottom: 45px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* 썸네일 이미지 */
+.video-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 아래 오버레이 */
+.video-item .video-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 18px;
+  font-size: 30px;
+  font-weight: 600;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  text-align: center;
+}
+
+/* ---------------------------- */
+/* 🟥 재생 화면 */
+/* ---------------------------- */
 
 .back-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #f7d9a1;
-  background: #463024;
-  border: 2px solid #8a5a36;
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  font-size: 32px;
+  background: rgba(255,255,255,0.35);
+  padding: 15px 20px;
+  border-radius: 20px;
   cursor: pointer;
 }
-
-/* 홈 화면 레이아웃 */
-
-#home {
-  background: radial-gradient(circle at top left, #463023, #0c0c0e 60%);
-}
-
-.home-inner {
-  width: 100%;
-  height: 100%;
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 홈 상단 타이틀 */
-
-.home-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.home-title {
-  margin: 0;
-  font-size: 44px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  color: #f6d37a;
-  text-shadow: 0 4px 0 #6b3c1e, 0 8px 16px rgba(0, 0, 0, 0.7);
-}
-
-.home-settings {
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #f6d37a;
-  background: #3a2820;
-  border: 2px solid #8a5a36;
-  cursor: pointer;
-}
-
-/* 홈 메인 영역: 왼쪽 카드 / 오른쪽 포스터 */
-
-.home-body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 2.3fr 1.2fr;
-  gap: 12px;
-  min-height: 0;
-}
-
-/* 홈 카드 3/3/2 배치 */
-
-.home-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-right: 6px;
-}
-
-.home-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-/* 행별 카드 개수에 맞게 정렬 */
-#homeRow1 .region-card {
-  flex: 1 1 calc(100% / 3 - 8px);
-}
-#homeRow2 .region-card {
-  flex: 1 1 calc(100% / 3 - 8px);
-}
-#homeRow3 {
-  justify-content: center;
-}
-#homeRow3 .region-card {
-  flex: 1 1 calc(100% / 3 - 8px);
-}
-
-/* 홈 카드 공통 스타일 (대형 썸네일) */
-
-.region-card {
-  background: #1a1410;
-  border-radius: 14px;
-  border: 2px solid #62412a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
-
-.region-thumb-wrap {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 비율 */
-  background: #111;
-}
-
-.region-thumb-wrap img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.region-thumb-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 6px 10px;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 0.0)
-  );
-}
-
-.region-name {
-  font-size: 16px;
-  font-weight: 800;
-  color: #f8e1b0;
-}
-
-/* 오른쪽 포스터 */
-
-.home-side {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.poster {
-  width: 100%;
-  max-width: 320px;
-  aspect-ratio: 3 / 4;
-  border-radius: 16px;
-  overflow: hidden;
-  background: radial-gradient(circle at top, #65402a, #130f10 70%);
-  border: 2px solid #7b4a2d;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.poster-img {
-  flex: 1;
-  background-image: url("app_icon.png"); /* 네 실사 공룡 아이콘 파일명 맞춰줘 */
-  background-size: cover;
-  background-position: center;
-  filter: contrast(1.1) saturate(1.2);
-}
-
-.poster-caption {
-  padding: 10px 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #f8e1b0;
-  background: rgba(0, 0, 0, 0.65);
-}
-
-/* 리스트 화면 (지역 영상 썸네일들) */
-
-.list {
-  padding: 16px 16px 18px;
-  height: calc(100vh - 60px); /* 상단바 제외 */
-  overflow-y: auto;
-  background: radial-gradient(circle at top, #2d1d15, #050608 65%);
-}
-
-.video-card {
-  margin-bottom: 14px;
-  background: #151111;
-  border-radius: 14px;
-  border: 2px solid #61412b;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.video-thumb-wrap {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-  background: #111;
-}
-
-.video-thumb-wrap img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.video-thumb-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 8px 12px;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85),
-    rgba(0, 0, 0, 0.0)
-  );
-}
-
-.video-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #f9e4c0;
-}
-
-/* 재생 화면 */
 
 .player-wrap {
-  padding: 14px 16px 18px;
-  height: calc(100vh - 60px);
-  background: radial-gradient(circle at top, #2d1d15, #050608 65%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#playerBox {
-  flex: 1;
-  background: #000;
-  border-radius: 14px;
+  width: 80%;
+  height: 65%;
+  margin: 100px auto 0 auto;
+  border-radius: 20px;
   overflow: hidden;
-  border: 2px solid #6f472e;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.55);
 }
 
-#youtubePlayer {
-  width: 100%;
-  height: 100%;
-}
-
-.player-hint {
-  font-size: 13px;
-  color: #f0dba8;
+/* 재생 컨트롤 */
+.play-controls {
+  margin-top: 40px;
   text-align: center;
-  margin: 0;
-}
-
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
 }
 
 .ctrl-btn {
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 15px;
+  padding: 20px 35px;
+  font-size: 28px;
+  margin: 0 10px;
+  background: rgba(255,222,180,0.85);
+  border: 3px solid #7a5227;
+  border-radius: 18px;
   font-weight: 700;
-  border: 2px solid #8a5a36;
-  background: #3b281d;
-  color: #f8e1b0;
   cursor: pointer;
 }
 
-/* 설정 화면 */
+/* ---------------------------- */
+/* 🟩 설정 화면 */
+/* ---------------------------- */
 
-.settings-body {
-  padding: 16px 18px;
-  background: radial-gradient(circle at top, #2d1d15, #050608 65%);
-  height: calc(100vh - 60px);
-  color: #f3e0b8;
-  font-size: 16px;
-  line-height: 1.5;
+.settings-box {
+  width: 95%;
+  margin: 40px auto;
+  height: calc(100% - 120px);
+  overflow-y: auto;
+  padding: 20px;
 }
 
-/* 좀 더 좁은 화면 대응 */
+.region-block {
+  background: rgba(255,255,255,0.35);
+  border-radius: 22px;
+  padding: 25px;
+  margin-bottom: 35px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
-@media (max-width: 900px) {
-  .home-body {
-    grid-template-columns: 1fr;
-  }
-  .home-side {
-    display: none;
-  }
+.region-block h3 {
+  font-size: 34px;
+  font-weight: 800;
+  color: #4e2f09;
+  margin-bottom: 15px;
+}
+
+.add-btn {
+  margin-top: 10px;
+  padding: 15px 22px;
+  font-size: 24px;
+  background: #ffe2c0;
+  border-radius: 16px;
+  border: 3px solid #7a5227;
+  cursor: pointer;
 }
