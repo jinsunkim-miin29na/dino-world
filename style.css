@@ -129,7 +129,7 @@ body {
 /* 지역 썸네일 카드 (큰 썸네일 B스타일) */
 .video-item {
   width: 100%;
-  height: 320px;
+  height: 200px;
   background: rgba(255,255,255,0.12);
   border-radius: 20px;
   margin-bottom: 45px;
@@ -141,8 +141,6 @@ body {
 
 /* 썸네일 이미지 */
 .video-item img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
@@ -151,8 +149,8 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 18px;
-  font-size: 30px;
+  padding: 12px;
+  font-size: 22px;
   font-weight: 600;
   background: rgba(0,0,0,0.45);
   color: #fff;
