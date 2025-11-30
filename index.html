@@ -9,22 +9,20 @@
 
 <body>
 
-    <!-- 홈 화면 -->
+    <!-- 🟢 홈 화면 -->
     <div id="home" class="screen">
         <button id="settingsBtn" onclick="openSettings()">설정</button>
-
         <div id="homeGrid"></div>
     </div>
 
-    <!-- 재생 목록 화면 -->
+    <!-- 🟡 재생 목록 화면 -->
     <div id="videoList" class="screen hidden">
         <button class="back-btn" onclick="goHome()">← 홈으로</button>
         <h2 id="regionTitle"></h2>
-
         <div id="videoContainer" class="video-grid"></div>
     </div>
 
-    <!-- 영상 재생 화면 -->
+    <!-- 🔥 재생 화면 -->
     <div id="playerScreen" class="screen hidden">
         <button class="back-btn" onclick="backToList()">← 목록으로</button>
 
@@ -39,12 +37,11 @@
         </div>
     </div>
 
-    <!-- 설정 화면 -->
+    <!-- ⚙️ 설정 화면 -->
     <div id="settingsScreen" class="screen hidden">
         <button class="back-btn" onclick="closeSettings()">← 홈으로</button>
         <h2>지역별 영상 관리</h2>
         <div id="settingsContainer"></div>
-
         <button class="save-btn" onclick="saveSettings()">저장하기</button>
     </div>
 
