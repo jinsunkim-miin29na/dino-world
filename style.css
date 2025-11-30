@@ -202,3 +202,43 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
+/* --- 커스텀 타임라인 (D안) --- */
+#seekBar {
+    width: 70%;
+    margin: 0 15px;
+    -webkit-appearance: none;
+    height: 10px;
+    background: rgba(255, 220, 160, 0.8);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+#seekBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #ffdd99;
+    border-radius: 50%;
+    border: 2px solid #8a5a1d;
+    cursor: pointer;
+}
+
+/* 전체화면 버튼 스타일 기존 버튼과 동일하게 */
+.pbtn {
+    font-size: 26px;
+    margin: 0 10px;
+    padding: 10px 16px;
+    background: #f7dbb0;
+    color: #5a3e12;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+    transition: transform .15s;
+}
+
+.pbtn:active {
+    transform: scale(0.92);
+}
