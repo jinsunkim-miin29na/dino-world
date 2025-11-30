@@ -1,5 +1,5 @@
-// 지역별 영상 목록 (초기값)
-let videos = {
+// 지역별 영상 목록
+const videos = {
     "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
     "인천": ["-_YndV1RjRc"],
     "동탄": ["058QwG7IRe8"],
@@ -10,16 +10,7 @@ let videos = {
     "창원": ["TjNrSYBo5zg"]
 };
 
-// 저장된 설정 불러오기
-if (localStorage.getItem("dinoVideos")) {
-    videos = JSON.parse(localStorage.getItem("dinoVideos"));
-}
 
-function saveVideos() {
-    localStorage.setItem("dinoVideos", JSON.stringify(videos));
-}
-
-// 홈 → 지역 목록
 function openRegion(region) {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("videoList").classList.remove("hidden");
@@ -30,14 +21,14 @@ function openRegion(region) {
     container.innerHTML = "";
 
     if (videos[region].length === 0) {
-        container.innerHTML = "<p style='color:white;'>등록된 영상이 없습니다.</p>";
+        container.innerHTML = "<p>등록된 영상이 없습니다.</p>";
         return;
     }
 
     videos[region].forEach(id => {
         const thumb = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
         container.innerHTML += `
-            <img class="videoThumb" src="${thumb}" onclick="playVideo('${id}')">
+            <img src="${thumb}" onclick="playVideo('${id}')">
         `;
     });
 }
@@ -45,10 +36,10 @@ function openRegion(region) {
 function goHome() {
     document.getElementById("videoList").classList.add("hidden");
     document.getElementById("playerScreen").classList.add("hidden");
+    document.getElementById("settingsScreen").classList.add("hidden");
     document.getElementById("home").classList.remove("hidden");
 }
 
-// 재생
 let player;
 
 function playVideo(videoId) {
@@ -69,60 +60,39 @@ function closePlayer() {
     if (player) player.destroy();
 }
 
-// 설정 화면
+
+/* 설정 화면 열기 */
 function openSettings() {
     document.getElementById("home").classList.add("hidden");
-    document.getElementById("settings").classList.remove("hidden");
+    document.getElementById("settingsScreen").classList.remove("hidden");
 
     const container = document.getElementById("settingsContainer");
     container.innerHTML = "";
 
-    Object.keys(videos).forEach(region => {
-        let card = `
-            <div class="setting-card">
-                <h3>${region}</h3>
+    for (let region in videos) {
+        let html = `
+        <div class="setting-box">
+            <h3>${region}</h3>
         `;
 
-        videos[region].forEach((id, index) => {
-            card += `
-                <div>
-                    <input type="text" value="https://youtu.be/${id}" 
-                           onchange="updateVideo('${region}', ${index}, this.value)">
-                </div>
-            `;
+        videos[region].forEach(id => {
+            html += `<div>https://youtu.be/${id}</div>`;
         });
 
-        card += `
-            <button class="add-btn" onclick="addVideo('${region}')">+ 영상 추가</button>
-            </div>
-        `;
+        html += `
+            <button onclick="addVideo('${region}')">+ 영상 추가</button>
+        </div>`;
 
-        container.innerHTML += card;
-    });
-}
-
-function updateVideo(region, index, url) {
-    const id = extractId(url);
-    videos[region][index] = id;
-    saveVideos();
+        container.innerHTML += html;
+    }
 }
 
 function addVideo(region) {
-    videos[region].push("");
-    saveVideos();
+    let url = prompt("YouTube 주소를 입력하세요:");
+    if (!url) return;
+
+    let id = url.split("v=")[1] || url.split("/").pop();
+    videos[region].push(id);
+
     openSettings();
 }
-
-function extractId(url) {
-    return url.replace("https://youtu.be/", "").split("?")[0].trim();
-}
-
-function closeSettings() {
-    document.getElementById("settings").classList.add("hidden");
-    document.getElementById("home").classList.remove("hidden");
-}
-
-// YouTube API 로드
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
