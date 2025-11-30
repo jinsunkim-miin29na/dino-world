@@ -1,89 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>공룡월드</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- 홈 화면 -->
-<div id="home" class="screen">
-    <button id="settingsBtn" onclick="openSettings()">설정</button>
+    <!-- 🟢 홈 화면 -->
+    <div id="home" class="screen">
 
-    <div class="grid">
-        <div class="region" onclick="openRegion('용인')">
-            <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg">
-            <span>용인</span>
-        </div>
+        <!-- 설정 버튼 -->
+        <button id="settingsBtn" onclick="openSettings()">설정</button>
 
-        <div class="region" onclick="openRegion('인천')">
-            <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg">
-            <span>인천</span>
-        </div>
+        <!-- 썸네일 그리드 -->
+        <div id="homeGrid"></div>
+    </div>
 
-        <div class="region" onclick="openRegion('동탄')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg">
-            <span>동탄</span>
-        </div>
+    <!-- 🟡 재생 목록 화면 -->
+    <div id="videoList" class="screen hidden">
+        <button class="back-btn" onclick="goHome()">← 홈</button>
+        <h2 id="regionTitle"></h2>
 
-        <div class="region" onclick="openRegion('아산')">
-            <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg">
-            <span>아산</span>
-        </div>
+        <div id="videoContainer" class="video-grid"></div>
+    </div>
 
-        <div class="region" onclick="openRegion('시흥')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg">
-            <span>시흥</span>
-        </div>
+    <!-- 🔥 플레이어 화면 (예쁜 프레임 적용) -->
+    <div id="playerScreen" class="screen hidden">
 
-        <div class="region" onclick="openRegion('세종')">
-            <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg">
-            <span>세종</span>
-        </div>
+        <button class="back-btn" onclick="closePlayer()">← 뒤로</button>
 
-        <div class="region" onclick="openRegion('광주')">
-            <img src="default_dino.png">
-            <span>광주</span>
-        </div>
+        <div class="player-frame">
+            <div id="player"></div>
 
-        <div class="region" onclick="openRegion('창원')">
-            <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg">
-            <span>창원</span>
+            <div class="player-controls">
+                <button onclick="restartVideo()">⟲</button>
+                <button onclick="togglePlay()">▶︎</button>
+                <button onclick="pauseVideo()">⏸</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- 영상 목록 화면 -->
-<div id="videoList" class="screen hidden">
-    <button class="backBtn" onclick="goHome()">← 뒤로</button>
-    <h2 id="regionTitle"></h2>
-    <div id="videoContainer" class="video-grid"></div>
-</div>
+    <!-- ⚙️ 설정 화면 -->
+    <div id="settingsScreen" class="screen hidden">
+        <button class="back-btn" onclick="goHome()">← 홈</button>
+        <h2>설정</h2>
 
-<!-- 영상 재생 화면 -->
-<div id="playerScreen" class="screen hidden">
-    <button class="backBtn" onclick="closePlayer()">← 뒤로</button>
-    <div id="player"></div>
-</div>
+        <div id="settingsContainer"></div>
+    </div>
 
-<!-- 설정 화면 -->
-<div id="settingsScreen" class="screen hidden">
-    <button class="backBtn" onclick="goHome()">← 뒤로</button>
-    <h2>설정</h2>
+    <script src="script.js"></script>
 
-    <div id="settingsContainer"></div>
-</div>
-
-<script src="script.js"></script>
-
-<!-- YouTube API -->
-<script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-</script>
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
