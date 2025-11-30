@@ -341,14 +341,16 @@ function playVideo(region, videoId) {
     });
 }
 
-/* --- 전체화면 on/off --- */
+// 진짜 전체화면: 영상 iframe만 전체 화면으로
 function enterFull() {
-    const elem = document.getElementById("playerScreen");
-    if (elem.requestFullscreen) elem.requestFullscreen();
+    const iframe = document.querySelector("#player iframe");
+    if (iframe.requestFullscreen) iframe.requestFullscreen();
 }
 
+// 전체화면 종료
 function exitFull() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     }
 }
+
