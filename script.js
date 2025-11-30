@@ -5,7 +5,7 @@ localStorage.removeItem("videos");
 let videos = {
     "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
     "인천": ["-_YndV1RjRc"],
-    "동탄": ["058QwG7IRe8"],
+    "동탄": ["uueASoGmhoc"],
     "아산": ["3G4s16NXNKQ"],
     "시흥": ["058QwG7IRe8"],
     "세종": ["MguH4CskJ6M"],
