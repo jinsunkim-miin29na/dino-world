@@ -1,7 +1,21 @@
+/* 전체 기본 */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
-  font-family: 'Pretendard', sans-serif;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard",
+    "Noto Sans KR", sans-serif;
   background: #f4e8c9;
+}
+
+body {
   overflow: hidden;
 }
 
@@ -15,28 +29,49 @@ body {
   display: block;
 }
 
-/* 뒤로가기 버튼 */
-.back-btn {
-  background: #f5d9ad;
-  border: 3px solid #d6b27a;
-  padding: 8px 16px;
-  font-size: 22px;
-  border-radius: 12px;
+/* 공통 상단 바 */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 12px;
+  background: #ffe8be;
+  border-bottom: 3px solid #e0c090;
+}
+
+.top-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #6b3a20;
+  margin: 0;
+}
+
+/* 버튼 공통 */
+
+button {
+  border: none;
   cursor: pointer;
 }
 
-button {
-  cursor: pointer;
+.back-btn {
+  background: #f7d7aa;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #6b3a20;
+  border: 3px solid #e0b47f;
 }
-/* ------------------------------ */
-/* HOME 배경 */
-/* ------------------------------ */
+
+/* ========================= */
+/*         HOME 화면         */
+/* ========================= */
 
 .home-bg {
   width: 100%;
   height: 100%;
-  padding: 20px;
-  border-radius: 22px;
+  padding: 20px 24px 24px;
   background: linear-gradient(
       to bottom,
       #b7e7f3 0%,
@@ -44,86 +79,116 @@ button {
       #c6efb9 70%,
       #97d676 100%
   );
-  position: relative;
-  overflow: hidden;
 }
 
-/* 구름 */
+/* 구름 느낌 */
 .home-bg::before,
 .home-bg::after {
   content: "";
   position: absolute;
-  top: 40px;
-  width: 200px;
+  top: 48px;
+  width: 220px;
   height: 80px;
   background: #ffffffdd;
-  border-radius: 200px;
+  border-radius: 999px;
   filter: blur(2px);
+  z-index: 0;
 }
-
 .home-bg::before {
-  left: 90px;
+  left: 80px;
 }
 .home-bg::after {
-  right: 140px;
+  right: 80px;
 }
 
-/* 제목 */
-.home-title-css {
+/* 제목 + 설정 */
+
+.home-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.home-title {
   font-size: 64px;
   font-weight: 900;
-  text-align: center;
-  margin: 20px 0 10px;
   color: #ffcf48;
-  text-shadow:
-      0 8px 0 #d38827,
-      0 12px 0 #b46a1b;
+  text-shadow: 0 8px 0 #d38827, 0 12px 0 #b46a1b;
   letter-spacing: 6px;
+  margin: 12px 0 0;
 }
 
-/* 레이아웃 */
-.home-layout-css {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 2fr 1.2fr;
-  gap: 10px;
+.settings-chip {
+  position: absolute;
+  right: 0;
+  top: 24px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: #ffe1b5;
+  border: 3px solid #e4b983;
+  color: #6b3a20;
+  font-size: 18px;
+  font-weight: 700;
 }
 
-/* CARD GRID */
-.region-grid-css {
+/* 메인 영역: 왼쪽 그리드 + 오른쪽 공룡 */
+
+.home-main {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 2fr 1.1fr;
+  gap: 12px;
+  height: calc(100% - 110px);
+}
+
+/* 지역 카드 그리드 */
+
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  padding: 10px;
+  padding: 12px;
+  align-content: start;
 }
 
 .region-card {
   background: #faead2;
-  border-radius: 22px;
-  padding: 6px;
-  box-shadow: 0 5px 10px rgba(120, 80, 40, 0.25);
+  border-radius: 24px;
+  padding: 8px;
   border: 4px solid #eed0a3;
-  cursor: pointer;
-  transition: 0.15s;
+  box-shadow: 0 6px 10px rgba(120, 80, 40, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.region-card:active {
-  transform: scale(0.96);
-}
-
-.region-thumb-wrapper {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.region-thumb {
+.region-card-btn {
   width: 100%;
-  height: 100px;
-  object-fit: cover;
+  height: 110px;
+  border-radius: 18px;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #8dcf68, #68b253);
+  cursor: pointer;
 }
 
-.region-thumb-overlay {
+.region-thumb-deco {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.5),
+      transparent 55%
+  );
+}
+
+.region-play {
   position: absolute;
   inset: 0;
   display: flex;
@@ -131,88 +196,232 @@ button {
   justify-content: center;
 }
 
-.region-play-bubble {
-  width: 38px;
-  height: 38px;
+.region-play-circle {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.8);
+  background: #fffbe9;
+  box-shadow: 0 3px 6px rgba(70, 40, 10, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
   color: #6d4a29;
+  font-size: 26px;
 }
 
 .region-name {
-  margin-top: 8px;
-  font-size: 17px;
-  font-weight: 700;
   text-align: center;
-  color: #6b4521;
+  font-size: 18px;
+  font-weight: 800;
+  color: #6b3a20;
 }
-/* 공룡 오른쪽 */
-.dino-right-css {
-  width: 100%;
-  height: 330px;
+
+/* 공룡 영역 */
+
+.dino-panel {
   position: relative;
-  margin-top: 40px;
-  background:
-    radial-gradient(circle at 40% 60%, #8dcf68 0%, #6fb94c 70%) padding-box,
-    radial-gradient(circle at 60% 40%, #3d7f2b 0%, #2c6520 70%) border-box;
-  border-radius: 40% 40% 20% 20%;
-  border: 8px solid #3e682b;
-  box-shadow: inset 0 0 0 10px rgba(255,255,255,0.2);
-}
-
-/* 지역 화면 공통 */
-.region-header,
-.player-header,
-.settings-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 20px;
+  justify-content: flex-end;
+  padding-bottom: 24px;
 }
 
-#videoList {
-  padding: 20px;
+.dino-body {
+  width: 70%;
+  max-width: 280px;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(180deg, #8fd56b 0%, #6cb74a 80%);
+  border-radius: 45% 45% 40% 40%;
+  position: relative;
+  border: 6px solid #4b7831;
+  box-shadow: 0 10px 16px rgba(40, 80, 30, 0.35);
+}
+
+/* 눈 */
+.dino-eye {
+  position: absolute;
+  top: 20%;
+  width: 18%;
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 3px solid #3b5a22;
+  overflow: hidden;
+}
+.dino-eye::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 45%;
+  height: 45%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #2d2d2d;
+}
+.dino-eye-left {
+  left: 24%;
+}
+.dino-eye-right {
+  right: 24%;
+}
+
+/* 볼 */
+.dino-cheek {
+  position: absolute;
+  top: 40%;
+  width: 16%;
+  aspect-ratio: 1 / 1;
+  background: #ffd4b5;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.dino-cheek-left {
+  left: 18%;
+}
+.dino-cheek-right {
+  right: 18%;
+}
+
+/* 배 */
+.dino-belly {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  height: 40%;
+  background: #ffe6c5;
+  border-radius: 45% 45% 40% 40%;
+}
+
+/* 바닥 잔디 */
+.dino-ground {
+  width: 100%;
+  height: 60px;
+  margin-top: 16px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #7acb4f, #5ba63b);
+  box-shadow: 0 6px 12px rgba(60, 120, 40, 0.4);
+}
+
+/* ========================= */
+/*       지역/재생/설정      */
+/* ========================= */
+
+.list-container {
+  padding: 16px 20px 24px;
+  height: calc(100% - 72px);
+  overflow-y: auto;
 }
 
 .video-item {
   background: #fff3dd;
-  padding: 16px;
   border-radius: 20px;
-  margin-bottom: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
   border: 3px solid #e1c59b;
-  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* 영상 */
-.video-wrapper {
+.video-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #6b3a20;
+}
+
+.video-play-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffe0b2;
+  border: 2px solid #e4b983;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6b3a20;
+}
+
+/* 재생 카드 */
+
+.player-card {
+  padding: 16px 20px 24px;
+  height: calc(100% - 72px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.player-video-wrap {
+  flex: 1;
+  background: #faead2;
+  border-radius: 20px;
+  padding: 12px;
+  border: 3px solid #eed0a3;
+}
+
+#playerContainer {
   width: 100%;
-  height: 65vh;
-  padding: 20px;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
+#youtubeFrame iframe,
 #youtubeFrame {
   width: 100%;
   height: 100%;
-  border-radius: 20px;
-  border: 3px solid #d3b88a;
 }
 
-/* 재생 컨트롤 */
+.player-timeline-hint {
+  font-size: 14px;
+  color: #7b5a34;
+  text-align: center;
+}
+
 .player-controls {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
+  gap: 12px;
 }
 
 .ctrl-btn {
-  font-size: 28px;
   background: #f8deba;
-  border: 4px solid #d0b07f;
-  padding: 14px 18px;
-  border-radius: 16px;
+  border-radius: 999px;
+  padding: 10px 16px;
+  border: 3px solid #d0b07f;
+  font-size: 16px;
+  font-weight: 700;
+  color: #6b3a20;
+}
+
+/* 설정 화면 */
+
+.settings-list {
+  padding: 16px 20px 24px;
+  height: calc(100% - 72px);
+  overflow-y: auto;
+  font-size: 16px;
+  color: #6b3a20;
+}
+
+/* 반응형: 화면 좁을 때는 카드 2열 */
+
+@media (max-width: 1200px) {
+  .home-main {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-main {
+    grid-template-columns: 1fr;
+  }
+  .dino-panel {
+    order: -1;
+  }
+  .region-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
