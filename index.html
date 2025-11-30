@@ -1,91 +1,41 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>공룡월드</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://www.youtube.com/iframe_api"></script>
-</head>
-<body>
+<div class="grid">
+  <div class="menu-card" onclick="openRegion('용인')">
+    <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg" class="thumb" />
+    <span>용인</span>
+  </div>
 
-<!-- 홈 화면 -->
-<div id="home" class="screen active">
-  <div class="home-inner">
-    <header class="home-header">
-      <h1 class="home-title">공룡월드</h1>
-      <button class="home-settings" onclick="openSettings()">설정</button>
-    </header>
+  <div class="menu-card" onclick="openRegion('인천')">
+    <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg" class="thumb" />
+    <span>인천</span>
+  </div>
 
-    <div class="home-body">
-      <!-- 카드 3/3/2 배치 -->
-      <div class="home-rows">
-        <div class="home-row" id="homeRow1"></div>
-        <div class="home-row" id="homeRow2"></div>
-        <div class="home-row" id="homeRow3"></div>
-      </div>
+  <div class="menu-card" onclick="openRegion('동탄')">
+    <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
+    <span>동탄</span>
+  </div>
 
-      <!-- 오른쪽 공룡 포스터 -->
-      <aside class="home-side">
-        <div class="poster">
-          <div class="poster-img"></div>
-          <div class="poster-caption">
-            실감나는 공룡쇼를<br />한 곳에서!
-          </div>
-        </div>
-      </aside>
-    </div>
+  <div class="menu-card" onclick="openRegion('아산')">
+    <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg" class="thumb" />
+    <span>아산</span>
+  </div>
+
+  <div class="menu-card" onclick="openRegion('시흥')">
+    <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
+    <span>시흥</span>
+  </div>
+
+  <div class="menu-card" onclick="openRegion('세종')">
+    <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg" class="thumb" />
+    <span>세종</span>
+  </div>
+
+  <div class="menu-card" onclick="openRegion('광주')">
+    <img src="no_image.png" class="thumb" />
+    <span>광주</span>
+  </div>
+
+  <div class="menu-card" onclick="openRegion('창원')">
+    <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg" class="thumb" />
+    <span>창원</span>
   </div>
 </div>
-
-<!-- 지역 영상 리스트 화면 -->
-<div id="regionScreen" class="screen">
-  <div class="top-bar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <h2 id="regionTitle" class="top-title"></h2>
-  </div>
-  <div id="videoList" class="list"></div>
-</div>
-
-<!-- 재생 화면 -->
-<div id="playerScreen" class="screen">
-  <div class="top-bar">
-    <button class="back-btn" onclick="backToRegion()">←</button>
-    <h2 id="playerRegion" class="top-title"></h2>
-  </div>
-
-  <div class="player-wrap">
-    <div id="playerBox">
-      <div id="youtubePlayer"></div>
-    </div>
-
-    <p class="player-hint">
-      아래 유튜브 바를 움직여서 원하는 부분으로 이동할 수 있어요.
-    </p>
-
-    <div class="controls">
-      <button class="ctrl-btn" onclick="restartVideo()">↺ 다시 시작</button>
-      <button class="ctrl-btn" id="playPauseBtn" onclick="togglePlay()">▶ 재생</button>
-      <button class="ctrl-btn" onclick="pauseVideo()">⏸ 일시정지</button>
-    </div>
-  </div>
-</div>
-
-<!-- 설정 화면 -->
-<div id="settingsScreen" class="screen">
-  <div class="top-bar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <h2 class="top-title">설정</h2>
-  </div>
-  <div class="settings-body">
-    <p>
-      나중에 여기에서 각 지역별<br />
-      유튜브 링크를 추가 / 수정할 수 있게<br />
-      확장할 수 있어요. 😊
-    </p>
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
