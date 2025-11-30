@@ -1,85 +1,65 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>공룡월드</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-
-<!-- ⭐ 홈 화면 (처음에 반드시 보이는 상태) -->
-<div id="home" class="screen">
-    <img src="home_bg.png" class="bg" />
-
-    <header>
-        <h1 class="title">공룡월드</h1>
-        <button class="setting-btn" onclick="openSettings()">설정</button>
-    </header>
-
-    <!-- 4 × 2 버튼 -->
-    <div class="grid">
-
-        <div class="menu-card" onclick="openRegion('용인')">
-            <img src="https://img.youtube.com/vi/ZgPjkSKD7WA/mqdefault.jpg" class="thumb" />
-            <span>용인</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('인천')">
-            <img src="https://img.youtube.com/vi/-_YndV1RjRc/mqdefault.jpg" class="thumb" />
-            <span>인천</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('동탄')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-            <span>동탄</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('아산')">
-            <img src="https://img.youtube.com/vi/3G4s16NXNKQ/mqdefault.jpg" class="thumb" />
-            <span>아산</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('시흥')">
-            <img src="https://img.youtube.com/vi/058QwG7IRe8/mqdefault.jpg" class="thumb" />
-            <span>시흥</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('세종')">
-            <img src="https://img.youtube.com/vi/MguH4CskJ6M/mqdefault.jpg" class="thumb" />
-            <span>세종</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('광주')">
-            <img src="default_dino.png" class="thumb" />
-            <span>광주</span>
-        </div>
-
-        <div class="menu-card" onclick="openRegion('창원')">
-            <img src="https://img.youtube.com/vi/TjNrSYBo5zg/mqdefault.jpg" class="thumb" />
-            <span>창원</span>
-        </div>
-
-    </div>
-</div>
+// 지역별 영상 목록
+const videos = {
+    "용인": ["ZgPjkSKD7WA", "qRdpwpHaN9k"],
+    "인천": ["-_YndV1RjRc"],
+    "동탄": ["058QwG7IRe8"],
+    "아산": ["3G4s16NXNKQ"],
+    "시흥": ["058QwG7IRe8"],
+    "세종": ["MguH4CskJ6M"],
+    "광주": [],
+    "창원": ["TjNrSYBo5zg"]
+};
 
 
-<!-- ⭐ 영상 목록 화면 -->
-<div id="videoList" class="screen hidden">
-    <button class="back-btn" onclick="goHome()">← 뒤로</button>
-    <h2 id="regionTitle"></h2>
+function openRegion(region) {
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("videoList").classList.remove("hidden");
 
-    <div id="videoContainer"></div>
-</div>
+    document.getElementById("regionTitle").innerText = region;
 
+    const container = document.getElementById("videoContainer");
+    container.innerHTML = "";
 
-<!-- ⭐ 플레이어 화면 -->
-<div id="playerScreen" class="screen hidden">
-    <button class="back-btn" onclick="closePlayer()">← 뒤로</button>
-    <div id="player"></div>
-</div>
+    if (videos[region].length === 0) {
+        container.innerHTML = "<p>등록된 영상이 없습니다.</p>";
+        return;
+    }
 
-<script src="script.js"></script>
-</body>
-</html>
+    videos[region].forEach(id => {
+        const thumb = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+        container.innerHTML += `
+            <img src="${thumb}" onclick="playVideo('${id}')">
+        `;
+    });
+}
+
+function goHome() {
+    document.getElementById("videoList").classList.add("hidden");
+    document.getElementById("playerScreen").classList.add("hidden");
+    document.getElementById("home").classList.remove("hidden");
+}
+
+let player;
+
+function playVideo(id) {
+    document.getElementById("videoList").classList.add("hidden");
+    document.getElementById("playerScreen").classList.remove("hidden");
+
+    if (player) player.destroy();
+
+    player = new YT.Player('player', {
+        videoId: id,
+        events: {}
+    });
+}
+
+function closePlayer() {
+    document.getElementById("playerScreen").classList.add("hidden");
+    document.getElementById("videoList").classList.remove("hidden");
+    if (player) player.destroy();
+}
+
+// YouTube API
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
