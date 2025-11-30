@@ -286,3 +286,69 @@ function extractId(url) {
 const tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
+
+/* --- 타임라인 업데이트 --- */
+const seekBar = document.getElementById("seekBar");
+let progressTimer = null;
+
+function updateProgressBar() {
+    if (!player || typeof player.getDuration !== "function") return;
+
+    const duration = player.getDuration();
+    const current = player.getCurrentTime();
+
+    if (duration > 0) {
+        seekBar.value = (current / duration) * 100;
+    }
+}
+
+/* 재생 위치 드래그 이동 */
+seekBar.addEventListener("input", () => {
+    if (!player) return;
+    const percent = seekBar.value;
+    const duration = player.getDuration();
+    player.seekTo((duration * percent) / 100);
+});
+
+/* 재생할 때 타이머 실행 */
+function startProgressBar() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = setInterval(updateProgressBar, 500);
+}
+
+/* player 생성 후 progress 시작 */
+function playVideo(region, videoId) {
+    hideScreens();
+    document.getElementById("playerScreen").classList.remove("hidden");
+
+    if (player) player.destroy();
+
+    player = new YT.Player("player", {
+        videoId: videoId,
+        playerVars: {
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            fs: 0,
+            disablekb: 1,
+            iv_load_policy: 3,
+            playsinline: 1
+        },
+        events: {
+            onReady: startProgressBar
+        }
+    });
+}
+
+/* --- 전체화면 on/off --- */
+function enterFull() {
+    const elem = document.getElementById("playerScreen");
+    if (elem.requestFullscreen) elem.requestFullscreen();
+}
+
+function exitFull() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    }
+}
